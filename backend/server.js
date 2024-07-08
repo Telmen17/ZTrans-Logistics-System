@@ -1,6 +1,7 @@
 const express = require('express');
 const colors = require("colors");
 const dotenv = require('dotenv').config({path: '../.env'});
+const cors = require('cors')
 const {errorHandler} =require('./middleware/errorMiddleware');
 // Import your database connection module
 const connectDB = require('./config/db');
@@ -10,6 +11,7 @@ const port = process.env.PORT || 5000;
 connectDB(); // Connect to the database
 
 const app = express();
+app.use(cors())
 
 //TODO: Youtube tutorial code
 app.use(express.json()); // To parse JSON bodies
@@ -19,6 +21,7 @@ app.use(express.urlencoded({extended: false}));
 app.use('/api/users', require('./routes/userRoutes'));
 //Using the goals routes
 app.use('/api/goals', require('./routes/goalRoutes'));
+
 
 app.use(errorHandler);
 
